@@ -6,9 +6,18 @@ public class Word implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	public String letter;
 	private String lettersInserted;
 	private boolean computerWin;
 	private boolean playerWin;
+
+	public String getLetter() {
+		return letter;
+	}
+
+	public void setLetter(String letter) {
+		this.letter = letter;
+	}
 
 	public String getLettersInserted() {
 		return lettersInserted;

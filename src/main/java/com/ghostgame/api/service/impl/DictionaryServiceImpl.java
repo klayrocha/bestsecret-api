@@ -28,7 +28,12 @@ public class DictionaryServiceImpl implements DictionaryService {
 	public Word findWord(String letter, String lettersInserted) {
 		LOGGER.info("Starts find words");
 		List<String> words = dictionaryRepository.getAllWords();
-		String wordTest = lettersInserted.concat(letter.toLowerCase());
+		String wordTest;
+		if(lettersInserted.equals("empty_letter")) {
+			 wordTest = letter;
+		} else {
+			 wordTest = lettersInserted.concat(letter.toLowerCase());
+		}
 		Word word = new Word();
 		word.setLettersInserted(wordTest);
 		if(words.contains(wordTest)) {
