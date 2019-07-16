@@ -43,7 +43,7 @@ public class DictionaryRepository {
 		}
 		sc.close();
 		words.sort(Comparator.comparing(String::length));
-		LOGGER.info("End load words");
+		LOGGER.info("End load words ");
 	}
 
 }

@@ -27,21 +27,60 @@ public class DictionaryServiceImpl implements DictionaryService {
 	
 	public Word findWord(String letter, String lettersInserted) {
 		LOGGER.info("Starts find words");
+		Word word = new Word();
 		List<String> words = dictionaryRepository.getAllWords();
 		String wordTest;
 		if(lettersInserted.equals("empty_letter")) {
-			 wordTest = letter;
+			 wordTest = letter.toLowerCase();
 		} else {
 			 wordTest = lettersInserted.concat(letter.toLowerCase());
 		}
-		Word word = new Word();
-		word.setLettersInserted(wordTest);
+		
+		if(wordTest.length() >= 3) {
+			boolean exist = false;
+			for (String w : words) {
+				if(w.startsWith(wordTest)) {
+					exist = true;
+				}
+			}
+			if(!exist) {
+				word.setLettersInserted(wordTest);
+				word.setPlayerWin(false);
+				word.setComputerWin(true);
+				LOGGER.info("Player lost");
+				return word;
+			}
+		}
+		
 		if(words.contains(wordTest)) {
-			word.setPlayerWin(true);
+			word.setLettersInserted(wordTest);
+			word.setPlayerWin(false);
+			word.setComputerWin(true);
+			LOGGER.info("Player lost");
 			return word;
+		} else {
+			String newWord = "";
+			for (String w : words) {
+				if(w.startsWith(wordTest)) {
+					newWord = wordTest + w.substring(wordTest.length(),wordTest.length()+1);
+					if(newWord.equals(w)) {
+						newWord = "";
+						continue;
+					} else {
+						if(words.contains(newWord)) {
+							newWord = "";
+							continue;
+						}
+						word.setLettersInserted(newWord);
+						return word;
+					}
+				}
+				word.setLettersInserted(wordTest);
+			}
+			word.setPlayerWin(true);
+			word.setComputerWin(false);
 		}
 		LOGGER.info("end find words");
 		return word;
 	}
-
 }
