@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -22,6 +23,9 @@ public class DictionaryRepository {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DictionaryRepository.class);
 	private static List<String> words = new ArrayList<String>();
+	
+	 @Value("${file.words.path}")
+	 private String fileWordsPath;
 
 	/**
 	 * Method responsible for returning all words
@@ -37,7 +41,7 @@ public class DictionaryRepository {
 	 */
 	public void loadWords() throws FileNotFoundException {
 		LOGGER.info("Starts load words");
-		InputStream is = new FileInputStream(new File("src/main/resources/gosthGameDict.txt"));
+		InputStream is = new FileInputStream(new File(fileWordsPath));
 		Scanner sc = new Scanner(is);
 		while (sc.hasNext()) {
 			String word = sc.nextLine();

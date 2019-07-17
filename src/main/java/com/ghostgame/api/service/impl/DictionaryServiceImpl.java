@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ghostgame.api.exception.IsNumberException;
+import com.ghostgame.api.exception.DictionaryException;
 import com.ghostgame.api.repository.DictionaryRepository;
 import com.ghostgame.api.response.Word;
 import com.ghostgame.api.service.DictionaryService;
@@ -24,6 +24,7 @@ import com.ghostgame.api.service.DictionaryService;
 public class DictionaryServiceImpl implements DictionaryService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DictionaryServiceImpl.class);
+	private static final String EMPTY_LETTER_FIRST_TIME =  "empty_letter";
 	
 	@Autowired
 	DictionaryRepository dictionaryRepository;
@@ -46,23 +47,20 @@ public class DictionaryServiceImpl implements DictionaryService {
 	 * @return Word
 	 * @throws IsNumberException 
 	 */
-	public Word findWord(String letter, String lettersInserted) throws Exception {
+	public Word findWord(String letter, String lettersInserted) {
 		LOGGER.info("Starts find words");
-		int i = 0;
-		int b = 2;
-		int c = b / i;
-		if(isNumber(letter)) {
-			throw new Exception("No numeric values allowed");
-		}
+		validLetter(letter);
 		Word word = new Word();
 		List<String> words = dictionaryRepository.getAllWords();
 		String wordTest;
-		if(lettersInserted.equals("empty_letter")) {
+		// First time, to be a valid endpoint,needed to add a text
+		if(lettersInserted.equals(EMPTY_LETTER_FIRST_TIME)) {
 			 wordTest = letter.toLowerCase();
 		} else {
 			 wordTest = lettersInserted.concat(letter.toLowerCase());
 		}
 		
+		// After the first time, I check if there is a word that begins with the letters, in this step has 3 letters or more, if not, player lost
 		if(wordTest.length() > 1) {
 			boolean exist = false;
 			for (String w : words) {
@@ -80,6 +78,7 @@ public class DictionaryServiceImpl implements DictionaryService {
 			}
 		}
 		
+		// Here I check if the player has already completed a word
 		if(words.contains(wordTest)) {
 			word.setLettersInserted(wordTest);
 			word.setPlayerWin(false);
@@ -87,6 +86,7 @@ public class DictionaryServiceImpl implements DictionaryService {
 			LOGGER.info("Player lost");
 			return word;
 		} else {
+			//Here I check the next letter to add in the word, if it doesn't have, the player wins 
 			String newWord = "";
 			for (String w : words) {
 				if(w.startsWith(wordTest)) {
@@ -114,11 +114,17 @@ public class DictionaryServiceImpl implements DictionaryService {
 	
 	
 	/**
-	 * Method responsible for verify if the input is number
+	 * Method responsible for validate the letter
 	 * @param value
 	 * @return boolean
 	 */
-	public static boolean isNumber(String value) {
-		return Pattern.matches("\\d+",value);
+	public static void validLetter(String value) {
+		if(Pattern.matches("\\d+",value)) {
+			throw new DictionaryException("No numeric values allowed");
+		}
+		if(value.length() > 1) {
+			throw new DictionaryException("Only one letter is allowed");
+		}
+		LOGGER.info("Validated letter");
 	}
 }

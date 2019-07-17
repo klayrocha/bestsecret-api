@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 
 import org.springframework.stereotype.Component;
 
-import com.ghostgame.api.exception.IsNumberException;
 import com.ghostgame.api.response.Word;
 
 /**
@@ -30,6 +29,6 @@ public interface DictionaryService {
 	 * @param lettersInserted
 	 * @return Word
 	 */
-	public Word findWord(String letter, String lettersInserted) throws Exception;
+	public Word findWord(String letter, String lettersInserted);
 
 }

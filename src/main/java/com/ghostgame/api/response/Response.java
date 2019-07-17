@@ -1,16 +1,19 @@
 package com.ghostgame.api.response;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Class used in return on controllers
+ * 
  * @author Francis Klay Rocha
  *
  * @param <T>
  */
-public class Response<T> {
+public class Response<T> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private T data;
 	private List<String> errors;
 
