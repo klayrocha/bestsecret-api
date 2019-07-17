@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * Class filter responsible for allow access
+ * @author Francis Klay Rocha
+ *
+ */
 public class SimpleCORSFilter implements Filter {
 
 	private final Log LOGGER = LogFactory.getLog(this.getClass());

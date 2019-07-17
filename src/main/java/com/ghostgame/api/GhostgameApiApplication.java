@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Bean;
 
 import com.ghostgame.api.service.DictionaryService;
 
+/**
+ * Class responsible for starting the application
+ * @author Francis Klay Rocha
+ *
+ */
 @SpringBootApplication
 public class GhostgameApiApplication {
 	
@@ -18,6 +23,9 @@ public class GhostgameApiApplication {
 		SpringApplication.run(GhostgameApiApplication.class, args);
 	}
 
+	/**
+	 * It will load all the words in memory
+	 */
 	@Bean
 	CommandLineRunner init() {
 		return args -> {

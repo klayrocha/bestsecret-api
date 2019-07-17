@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Class responsible for loading all words and returning list of them 
- * @author klayrocha
+ * @author Francis Klay Rocha
  */
 @Repository
 public class DictionaryRepository {
@@ -31,6 +31,10 @@ public class DictionaryRepository {
 		return words;
 	}
 
+	/**
+	 * Method responsible for load all the words in memory
+	 * @throws FileNotFoundException
+	 */
 	public void loadWords() throws FileNotFoundException {
 		LOGGER.info("Starts load words");
 		InputStream is = new FileInputStream(new File("src/main/resources/gosthGameDict.txt"));

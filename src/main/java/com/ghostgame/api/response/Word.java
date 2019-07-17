@@ -2,6 +2,12 @@ package com.ghostgame.api.response;
 
 import java.io.Serializable;
 
+/**
+ * Class representing the model of an word
+ * 
+ * @author Francis Klay Rocha
+ *
+ */
 public class Word implements Serializable {
 
 	private static final long serialVersionUID = 1L;

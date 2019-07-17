@@ -26,6 +26,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
+		
+		if(ex instanceof IsNumberException) {
+			System.out.println("########################################################## APASSOU AUI ###");
+		}
+		
 		LOGGER.log(Level.SEVERE, "BESTSECRET ERROR : " + ex.getMessage(), ex.getMessage());
 		String error = "Internal Error, please contact the system administrator";
 		return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, error, ex));

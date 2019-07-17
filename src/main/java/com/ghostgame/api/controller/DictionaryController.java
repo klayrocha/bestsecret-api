@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ghostgame.api.exception.IsNumberException;
 import com.ghostgame.api.response.Response;
 import com.ghostgame.api.response.Word;
 import com.ghostgame.api.service.DictionaryService;
@@ -27,9 +28,15 @@ public class DictionaryController {
 	@Autowired
 	private DictionaryService dictionaryService;
 
+	/**
+	 * EndPoint responsible to find the better word
+	 * @param letter
+	 * @param lettersInserted
+	 * @return ResponseEntity<Response<Word>>
+	 * @throws IsNumberException 
+	 */
 	@GetMapping(value = "{letter}/{lettersInserted}")
-	public ResponseEntity<Response<Word>> findWord(@PathVariable String letter,
-			@PathVariable String lettersInserted) {
+	public ResponseEntity<Response<Word>> findWord(@PathVariable String letter,	@PathVariable String lettersInserted) throws Exception {
 		Response<Word> response = new Response<Word>();
 		Word word = dictionaryService.findWord(letter, lettersInserted);
 		response.setData(word);

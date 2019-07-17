@@ -3,6 +3,12 @@ package com.ghostgame.api.response;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class used in return on controllers
+ * @author Francis Klay Rocha
+ *
+ * @param <T>
+ */
 public class Response<T> {
 
 	private T data;
