@@ -60,23 +60,22 @@ public class DictionaryServiceImpl implements DictionaryService {
 			 wordTest = lettersInserted.concat(letter.toLowerCase());
 		}
 		
-		// After the first time, I check if there is a word that begins with the letters, in this step has 3 letters or more, if not, player lost
-		if(wordTest.length() > 1) {
-			boolean exist = false;
-			for (String w : words) {
-				if(w.startsWith(wordTest)) {
-					exist = true;
-					break;
-				}
-			}
-			if(!exist) {
-				word.setLettersInserted(wordTest);
-				word.setPlayerWin(false);
-				word.setComputerWin(true);
-				LOGGER.info("Player lost");
-				return word;
+		// I check if there is a word that begins with the letter, can be '
+		boolean exist = false;
+		for (String w : words) {
+			if(w.startsWith(wordTest)) {
+				exist = true;
+				break;
 			}
 		}
+		if(!exist) {
+			word.setLettersInserted(wordTest);
+			word.setPlayerWin(false);
+			word.setComputerWin(true);
+			LOGGER.info("Player lost");
+			return word;
+		}
+		
 		
 		// Here I check if the player has already completed a word
 		if(words.contains(wordTest)) {
