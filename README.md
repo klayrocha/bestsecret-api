@@ -9,6 +9,8 @@ Then run "java -jar target/ghostgame-api-0.0.1-SNAPSHOT.jar"  command
 
 If you want to change the port other than 8080 is in the file application.properties property server.port
 
+##The property "file.words.path" is absolute path, need to change
+
 
 After executing the commands, import the bestsecret.postman_collection.json file from the doc folder in Postman to test the services.
 
